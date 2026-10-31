@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kavach · a forecast for your skin</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=DM+Sans:wght@400;500;700&display=swap">
+<style>
+:root{--bg:#fbf7f0;--paper:#fffdf9;--ink:#2b3a34;--mu:#7a8a82;--line:#e6dfd2;--sage:#cfe0d2;--saged:#5f9a7e;--clay:#f2c4a8;--clayd:#d9825a;--rose:#cf6f62;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171f1c;--paper:#1e2824;--ink:#eef3ef;--mu:#9fb0a7;--line:#2e3b36;--sage:#2b4439;--clay:#4a3629;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#171f1c;--paper:#1e2824;--ink:#eef3ef;--mu:#9fb0a7;--line:#2e3b36;--sage:#2b4439;--clay:#4a3629;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "DM Sans",system-ui,sans-serif}
+.w{max-width:960px;margin:0 auto;padding:20px 20px 60px}
+.top{display:flex;justify-content:space-between;align-items:center;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.logo{font:italic 500 26px Fraunces,Georgia,serif;letter-spacing:.01em}.logo b{color:var(--clayd);font-style:normal}
+select{font:inherit;padding:7px 10px;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink)}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;padding:44px 0 36px;align-items:center}
+@media(max-width:700px){.hero{grid-template-columns:1fr;gap:20px;padding-top:28px}}
+h1{font:500 clamp(34px,6vw,54px)/1.08 Fraunces,Georgia,serif;margin:0 0 14px}h1 em{color:var(--clayd)}
+.lead{color:var(--mu);max-width:44ch;margin:0}
+.src{display:inline-block;margin-top:14px;font-size:12.5px;color:var(--mu);border-bottom:1px dashed var(--mu)}
+.score{background:var(--sage);border-radius:6px 40px 6px 40px;padding:26px 26px 22px}
+.score small{letter-spacing:.14em;font-size:11px;font-weight:700;color:var(--mu)}
+.num{font:500 92px/1 Fraunces,Georgia,serif;margin:4px 0 2px}.num span{font-size:22px;color:var(--mu)}
+.scale{height:8px;border-radius:8px;background:linear-gradient(90deg,var(--saged),var(--clayd) 60%,var(--rose));position:relative;margin:14px 0 8px}
+.scale i{position:absolute;top:-5px;width:4px;height:18px;border-radius:2px;background:var(--ink);transition:left .5s}
+.sec{padding:34px 0;border-top:1px solid var(--line)}
+.sec>h2{font:500 26px Fraunces,Georgia,serif;margin:0 0 18px}.sec>h2 span{font:700 12px "DM Sans";color:var(--clayd);letter-spacing:.14em;margin-right:12px;vertical-align:middle}
+.cols{display:grid;grid-template-columns:repeat(3,1fr)}
+.col{padding:4px 18px;border-left:1px solid var(--line)}.col:first-child{border-left:0;padding-left:0}
+.col small{color:var(--mu)}.col b{display:block;font:500 40px Fraunces,Georgia,serif}.col p{margin:0;font-size:13.5px;color:var(--mu)}
+.pod{display:flex;gap:14px;align-items:center;margin-top:22px;background:var(--clay);padding:14px 18px;border-radius:40px 6px 40px 6px}
+.dot{width:38px;height:38px;border-radius:50%;background:var(--paper);display:grid;place-items:center;font:500 18px Fraunces;flex:none}
+.pod p{margin:0}.pod span{color:var(--mu);font-size:14px}
+ol.plan{list-style:none;margin:0;padding:0}ol.plan li{display:grid;grid-template-columns:90px 1fr;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+ol.plan li:last-child{border:0}ol.plan h3{margin:0;font:italic 500 18px Fraunces,Georgia,serif;color:var(--clayd)}
+button{font:700 14.5px "DM Sans";background:var(--ink);color:var(--bg);border:0;border-radius:6px;padding:11px 18px;cursor:pointer}
+button.alt{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 14px}.chip{background:transparent;color:var(--ink);border:1px solid var(--line);font-weight:500;padding:6px 14px;border-radius:99px}.chip.on{background:var(--sage);border-color:var(--saged)}
+details{margin-top:18px;font-size:14px;color:var(--mu)}summary{cursor:pointer}
+.sl{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:12px}.sl input{width:100%;accent-color:var(--saged)}
+canvas{max-width:100%;border-radius:6px;display:none;margin-top:14px}
+.m{display:none;grid-template-columns:repeat(3,1fr);gap:0;margin-top:14px}.m div{padding:6px 16px;border-left:1px solid var(--line);font-size:13px;color:var(--mu)}.m div:first-child{border:0;padding-left:0}.m b{display:block;font:500 34px Fraunces;color:var(--ink)}
+.note{font-size:13px;color:var(--mu)}
+.st{display:flex;gap:8px;margin:10px 0 14px}.st i{width:22px;height:22px;border-radius:50% 50% 50% 4px;border:1.5px solid var(--saged)}.st i.on{background:var(--saged)}
+svg{width:100%;height:auto;color:var(--ink)}
+footer{padding-top:30px;border-top:1px solid var(--line);font-size:12.5px;color:var(--mu)}
+</style></head><body><div class="w">
+<div class="top"><div class="logo">ka<b>v</b>ach</div><select id="city" aria-label="City"></select></div>
+
+<section class="hero"><div>
+<h1>Your skin has a <em>forecast</em> too.</h1>
+<p class="lead">Smog, heat and dry air age skin quietly. Kavach reads tomorrow’s conditions and tells you what to put on before they arrive.</p>
+<span class="src" id="src"></span></div>
+<div class="score"><small>SKIN STRESS INDEX · <span id="where"></span></small>
+<div class="num"><span id="n0"></span><span>/100</span></div>
+<div class="scale"><i id="mk"></i></div><div id="head" style="font:italic 500 19px Fraunces,Georgia,serif"></div></div></section>
+
+<section class="sec"><h2><span>01</span>The next three days</h2>
+<div class="cols" id="cols"></div>
+<div class="pod"><div class="dot" id="pi"></div><p><b id="podT"></b><br><span id="podD"></span></p></div>
+<details><summary>Try a what-if (change today’s conditions)</summary><div class="sl">
+<label>AQI <b id="vA"></b><input id="aqi" type="range" min="20" max="450"></label>
+<label>UV <b id="vU"></b><input id="uv" type="range" min="0" max="11"></label>
+<label>Temp °C <b id="vT"></b><input id="tmp" type="range" min="2" max="48"></label>
+<label>Humidity % <b id="vH"></b><input id="hum" type="range" min="10" max="100"></label></div></details></section>
+
+<section class="sec"><h2><span>02</span>Your shield plan</h2>
+<div class="note">Skin type</div><div class="chips" id="chips"></div><ol class="plan" id="plan"></ol></section>
+
+<section class="sec"><h2><span>03</span>Check in with your skin</h2>
+<p class="note" style="margin-top:0">Selfie in even light. Everything is processed on your device; nothing is uploaded.</p>
+<input id="file" type="file" accept="image/*" style="display:none"><button onclick="document.getElementById('file').click()">Upload a selfie</button>
+<canvas id="cv"></canvas>
+<div class="m" id="mm"><div>Redness<b id="r"></b></div><div>Texture<b id="x"></b></div><div>Dullness<b id="d"></b></div></div>
+<p class="note">These are proxy signals from colour and contrast, not a diagnosis. A production model would be calibrated on Fitzpatrick IV–VI skin tones.</p></section>
+
+<section class="sec"><h2><span>04</span>Progress</h2>
+<div class="note">Shield days this week</div><div class="st" id="st"></div>
+<button class="alt" onclick="logDay()">I wore my pod today</button>
+<svg id="ch" viewBox="0 0 400 150" style="margin-top:16px"></svg>
+<p class="note">Earlier weeks are example data. Each check-in adds a real point and is saved on this device.</p></section>
+
+<footer>Kavach · L’Oréal Sustainability Challenge 2026 · Research &amp; Innovation. Live data: Open-Meteo (US AQI scale). Sample data is used if the network is unavailable.</footer>
+</div>
+<script>
+const $=id=>document.getElementById(id),cl=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
+const CITY={Delhi:[28.61,77.21,[300,8,34,35]],Kanpur:[26.45,80.33,[235,8,33,45]],Lucknow:[26.85,80.95,[210,8,33,48]],Mumbai:[19.08,72.88,[105,9,32,78]],Chennai:[13.08,80.27,[85,10,34,72]],Bengaluru:[12.97,77.59,[70,7,26,60]]};
+Object.keys(CITY).forEach(k=>$('city').add(new Option(k,k)));
+let D=[],type='Oily',live=false,hist=[62,57,52,49],days=3;
+try{const s=JSON.parse(localStorage.getItem('kavach')||'{}');if(s.hist)hist=s.hist;if(s.days!=null)days=s.days;if(s.type)type=s.type}catch(e){}
+const save=()=>{try{localStorage.setItem('kavach',JSON.stringify({hist,days,type}))}catch(e){}};
+const PODS={"Smog Pod":["S","Ergothioneine, ferulic acid with C and E, plus a light film that helps particles rinse off.","PM2.5 and ozone drive oxidative stress and lipid peroxidation."],"Heat-Humid Pod":["H","Niacinamide, zinc PCA and light mattifying polymers.","Heat and humidity oxidise sebum and strain the barrier."],"Dry-Cold Pod":["D","Ceramides, cholesterol, fatty acids and panthenol.","Dry or air-conditioned air increases water loss through the barrier."]};
+function ssi(a,u,t,h){const heat=t+(h>40?(h-40)*.12:0),A=cl(a/300),U=cl(u/11),H=cl((heat-25)/20),Dr=cl(cl((40-h)/30)+cl((15-t)/15));
+ const j={Oily:[1,1.15,.9],Dry:[1,.9,1.2],Sensitive:[1.15,1.1,1.1],Combination:[1,1,1]}[type];
+ return{v:Math.round(100*cl(.4*A*j[0]+.2*U*j[0]+.25*H*j[1]+.15*Dr*j[2])),p:[["Smog Pod",A*1.2*j[0]],["Heat-Humid Pod",H*j[1]],["Dry-Cold Pod",Dr*j[2]]].sort((x,y)=>y[1]-x[1])[0][0]}}
+const lv=v=>v<35?'Calm':v<65?'Moderate':'High';
+const names=['Today','Tomorrow','Day after'];
+function render(){const r=D.map(d=>ssi(...d)),t=r[0];
+ ['aqi','uv','tmp','hum'].forEach((id,i)=>{$(id).value=D[0][i]});
+ $('vA').textContent=Math.round(D[0][0]);$('vU').textContent=Math.round(D[0][1]);$('vT').textContent=Math.round(D[0][2]);$('vH').textContent=Math.round(D[0][3]);
+ $('where').textContent=$('city').value.toUpperCase();$('n0').textContent=t.v;$('mk').style.left=`calc(${t.v}% - 2px)`;
+ $('head').textContent=lv(t.v)+' today'+(r[2].v>t.v+5?', climbing by day three':r[2].v<t.v-5?', easing by day three':'');
+ $('src').textContent=live?'Live forecast data':'Sample data (offline mode)';
+ $('cols').innerHTML=r.map((x,i)=>`<div class="col"><small>${names[i]}</small><b>${x.v}</b><p>${lv(x.v)} · AQI ${Math.round(D[i][0])}, UV ${Math.round(D[i][1])}</p></div>`).join('');
+ const nx=r[1],p=PODS[nx.p];$('pi').textContent=p[0];$('podT').textContent='Tomorrow: snap in the '+nx.p;$('podD').textContent=p[2]+' '+p[1];
+ const u=D[0][1],a=D[0][0];
+ $('plan').innerHTML=`<li><h3>Morning</h3><div>Shield Gel with the <b>${t.p}</b>. ${PODS[t.p][1]}</div></li><li><h3>Daytime</h3><div>${u>=6?'UV is high today. Use a tinted mineral SPF and reapply after about three hours.':'UV is moderate. A light SPF is enough.'}${a>150?' Air is poor, so keep a mask for long commutes.':''}</div></li><li><h3>Night</h3><div>${a>150?'Double cleanse to lift particles, then barrier repair.':'Gentle cleanse, then Shield Gel to rebuild the barrier.'}</div></li>`}
+async function load(){const c=CITY[$('city').value];live=false;D=[0,1,2].map(()=>c[2].slice());
+ try{const [aq,w]=await Promise.all([fetch(`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${c[0]}&longitude=${c[1]}&hourly=us_aqi,uv_index&forecast_days=3&timezone=auto`).then(r=>r.json()),fetch(`https://api.open-meteo.com/v1/forecast?latitude=${c[0]}&longitude=${c[1]}&hourly=temperature_2m,relative_humidity_2m&forecast_days=3&timezone=auto`).then(r=>r.json())]);
+  const win=(arr,i,f)=>{const s=arr.slice(i*24,i*24+24).filter(v=>v!=null);return s.length?f(s):null};
+  const mx=s=>Math.max(...s),av=s=>s.reduce((x,y)=>x+y,0)/s.length;
+  const n=[0,1,2].map(i=>[win(aq.hourly.us_aqi,i,mx),win(aq.hourly.uv_index,i,mx),win(w.hourly.temperature_2m,i,mx),win(w.hourly.relative_humidity_2m,i,av)]);
+  if(n.every(r=>r.every(v=>v!=null&&isFinite(v)))){D=n;live=true}}catch(e){}
+ render()}
+['aqi','uv','tmp','hum'].forEach((id,i)=>$(id).oninput=()=>{D[0][i]=+$(id).value;live=live;render()});
+$('city').onchange=load;
+['Oily','Dry','Sensitive','Combination'].forEach(t=>{const b=document.createElement('button');b.className='chip'+(t==type?' on':'');b.textContent=t;b.onclick=()=>{type=t;[...$('chips').children].forEach(c=>c.classList.toggle('on',c.textContent==t));save();render()};$('chips').appendChild(b)});
+function drawSt(){$('st').innerHTML=Array.from({length:7},(_,i)=>`<i class="${i<days?'on':''}"></i>`).join('')}
+function logDay(){days=Math.min(7,days+1);save();drawSt()}
+function draw(){const w=400,h=150,p=26,H=hist.slice(-6),pts=H.map((v,i)=>[p+i*(w-2*p)/Math.max(H.length-1,1),h-p-(v/100)*(h-2*p)]);
+ $('ch').innerHTML=`<polyline fill="none" stroke="#5f9a7e" stroke-width="2.5" points="${pts.map(q=>q.join(',')).join(' ')}"/>`+pts.map((q,i)=>`<circle cx="${q[0]}" cy="${q[1]}" r="4.5" fill="${i==H.length-1?'#d9825a':'#5f9a7e'}"/><text x="${q[0]}" y="${q[1]-9}" font-size="11" text-anchor="middle" fill="currentColor">${H[i]}</text>`).join('')+`<text x="6" y="12" font-size="10" fill="currentColor">Skin stress score, lower is better</text>`}
+$('file').onchange=e=>{const f=e.target.files[0];if(!f)return;const im=new Image();im.onload=()=>{const c=$('cv'),x=c.getContext('2d');c.width=180;c.height=180*im.height/im.width;x.drawImage(im,0,0,c.width,c.height);c.style.display='block';
+ const d=x.getImageData(0,0,c.width,c.height).data;let R=0,L=0,L2=0,n=d.length/4;
+ for(let i=0;i<d.length;i+=4){const l=.299*d[i]+.587*d[i+1]+.114*d[i+2];R+=d[i]/(d[i]+d[i+1]+d[i+2]+1);L+=l;L2+=l*l}
+ const m=L/n,sd=Math.sqrt(L2/n-m*m),red=cl((R/n-.33)/.17)*100,tex=cl(sd/70)*100,dull=cl(1-m/200)*100;
+ $('r').textContent=Math.round(red);$('x').textContent=Math.round(tex);$('d').textContent=Math.round(dull);$('mm').style.display='grid';
+ hist.push(Math.round((red+tex+dull)/3));hist=hist.slice(-8);save();draw()};im.src=URL.createObjectURL(f)};
+load();draw();drawSt();
+</script></body></html>
